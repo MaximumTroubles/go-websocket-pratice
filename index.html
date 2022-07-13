@@ -6,14 +6,23 @@
     <title>Document</title>
 </head>
 <body>
+    <input name="text" type="text" maxlength="512" id="text" class="text"/>
+    <button onclick="sendMessage()">Click me</button>
+
     <script>
-        let socket = new WebSocket("ws://localhost:8080/ws")
+        let socket = new WebSocket("ws://localhost:8080/chat")
         console.log("Attemting Websocket connection")
 
         socket.onopen = () => {
             console.log("Successfully connected")
             socket.send("Hi From The Client")
         }
+
+        function sendMessage() {
+            var message = document.getElementById("text").value
+            socket.send(message)
+        }
+
 
         socket.onclose = (event) => {
             console.log("Socket Closed Connection", event)

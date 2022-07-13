@@ -29,6 +29,8 @@ func reader(conn *websocket.Conn) {
 		}
 
 		log.Println(string(p))
+		log.Println(messageType)
+
 
 		if err := conn.WriteMessage(messageType, p); err != nil {
 			log.Println(err)
@@ -44,14 +46,14 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("Websocket connected successfuly..")
+	fmt.Println("From the server-side: Websocket connected successfuly..")
 
 	reader(conn)
 }
 
 func setupRoutes() {
 	http.HandleFunc("/", homePage)
-	http.HandleFunc("/ws", wsEndpoint)
+	http.HandleFunc("/chat", wsEndpoint)
 }
 
 func main() {
